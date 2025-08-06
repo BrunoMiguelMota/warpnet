@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 | Page Not Found | WarpNet</title>
+  <meta name="description" content="404 error page - No webpage found on WarpNet.">
+  <link rel="icon" href="https://warpnet.es/images/logowarpnet.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .animate-fadein { animation: fadein 0.7s cubic-bezier(.4,0,.2,1);}
+    .fab-container {
+      position: fixed;
+      right: 1.25rem;
+      bottom: 1.25rem;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .fab {
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      font-size: 1.75rem;
+      background: white;
+      color: #2563eb;
+    }
+    .fab:hover {
+      background: #2563eb;
+      color: white;
+    }
+    .fab-whatsapp { color: #25D366; }
+    .fab-whatsapp:hover { background: #25D366; color: white; }
+    .fab-email { color: #EA4335; }
+    .fab-email:hover { background: #EA4335; color: white; }
+    .fab-top { color: #2563eb; }
+    .fab-top:hover { background: #2563eb; color: white; }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- HEADER -->
+<header class="bg-gradient-to-r from-blue-900 via-blue-700 to-blue-600 shadow-lg sticky top-0 z-50">
+  <div class="container mx-auto px-4 py-2.5 flex items-center justify-between">
+    <a href="/">
+      <img src="https://warpnet.es/images/logowarpnet.png" alt="WarpNet Logo" class="w-[144px] h-auto" />
+    </a>
+    <nav class="relative flex-1">
+      <!-- Hide nav on 404 -->
+    </nav>
+    <div class="header-actions flex flex-col items-end ml-2">
+      <a href="tel:+34627900370" class="btn btn-primary hidden md:inline-flex ml-4 bg-yellow-400 hover:bg-yellow-500 text-blue-900 px-4 py-2 rounded-md transition items-center font-bold"><i class="fas fa-phone mr-2"></i> <span>+34 627 900 370</span></a>
+      <div class="flex mt-2 space-x-2">
+        <img src="https://flagcdn.com/24x18/es.png" alt="Spain" width="24" height="18" class="rounded shadow">
+        <img src="https://flagcdn.com/24x18/pt.png" alt="Portugal" width="24" height="18" class="rounded shadow">
+        <img src="https://flagcdn.com/24x18/gb.png" alt="UK" width="24" height="18" class="rounded shadow">
+        <img src="https://flagcdn.com/24x18/fr.png" alt="France" width="24" height="18" class="rounded shadow">
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- 404 HERO Section -->
+<section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
+  <div class="container mx-auto px-4 text-center animate-fadein">
+    <img src="https://warpnet.es/images/logowarpnet.png" alt="WarpNet Logo" class="mx-auto mb-6 w-24 h-auto" />
+    <h1 class="text-6xl font-extrabold mb-4 tracking-tight">404</h1>
+    <p class="text-2xl font-semibold mb-2">Page Not Found</p>
+    <p class="mb-8 text-lg text-white/90">
+      Oops! The page you’re looking for doesn’t exist or has been moved.<br>
+      Please check the URL or return to the homepage.
+    </p>
+    <a href="/" class="inline-block bg-white text-blue-600 hover:bg-gray-100 px-6 py-3 rounded-md font-medium transition shadow-lg">
+      <i class="fas fa-home mr-2"></i> Go to Homepage
+    </a>
+    <div class="mt-8">
+      <a href="contact.html" class="inline-block bg-yellow-400 hover:bg-yellow-500 text-blue-900 px-5 py-2 rounded-md font-bold transition mr-2">
+        <i class="fas fa-envelope mr-2"></i>Contact Support
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-800 text-white py-12 mt-16">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div>
+        <img src="https://warpnet.es/images/logowarpnet.png" alt="WarpNet Logo" class="mb-4" style="width: 60px; height: auto;">
+        IT infrastructure specialists
+      </div>
+      <div>
+        <h3>About us:</h3>
+        <ul>
+          <li>Warp NET</li>
+          <li>NIF Z2497111Y</li>
+          <li>Calle Manuel Vivas Santillan, 14</li>
+          <li>06200 Almendralejo, Spain</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <address class="not-italic space-y-2">
+          <a href="tel:+34627900370" class="flex items-center hover:text-blue-400 transition">
+            <i class="fas fa-phone text-blue-600 text-xl mr-2"></i>
+            +34 627 900 370
+          </a>
+          <a href="/cdn-cgi/l/email-protection#0f666169604f786e7d7f616a7b216a7c" class="flex items-center hover:text-blue-400 transition">
+            <i class="fas fa-envelope text-blue-600 text-xl mr-2"></i>
+            <span class="__cf_email__" data-cfemail="5b32353d341b2c3a292b353e2f753e28">[email&#160;protected]</span>
+          </a>
+          <a href="https://www.instagram.com/warpnet.es/" target="_blank" rel="noopener" class="flex items-center hover:text-blue-400 transition">
+            <!-- Instagram SVG icon from index.html -->
+            <svg width="24" height="24" fill="#2563eb" class="mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <rect x="2" y="2" width="20" height="20" rx="5"/>
+              <circle cx="12" cy="12" r="5.5" fill="none" stroke="#2563eb" stroke-width="2"/>
+              <circle cx="17" cy="7" r="1.2" fill="#2563eb"/>
+            </svg>
+            <span>Instagram</span>
+          </a>
+          <a href="https://www.linkedin.com/in/warp-net-it-solutions-almendralejo-badajoz-elvas-610b49378" target="_blank" rel="noopener" class="flex items-center hover:text-blue-400 transition">
+            <!-- LinkedIn SVG icon from index.html -->
+            <svg width="24" height="24" fill="#2563eb" class="mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <rect x="2" y="2" width="20" height="20" rx="5"/>
+              <rect x="6.5" y="10" width="2" height="7" fill="#2563eb"/>
+              <rect x="6.5" y="7" width="2" height="2" fill="#2563eb"/>
+              <rect x="10" y="13" width="2" height="4" fill="#2563eb"/>
+              <rect x="13" y="13" width="2" height="4" fill="#2563eb"/>
+              <rect x="10" y="10" width="5" height="2" fill="#2563eb"/>
+            </svg>
+            <span>LinkedIn</span>
+          </a>
+        </address>
+      </div>
+    </div>
+    <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+      <p>&copy; <span id="current-year"></span> WarpNet. All rights reserved</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Floating Action Buttons -->
+<div class="fab-container">
+  <a href="https://wa.me/34627900370" class="fab fab-whatsapp" target="_blank" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  <a href="/cdn-cgi/l/email-protection#ff96919990bf889e8d8f919a8bd19a8c" class="fab fab-email" aria-label="Email info@warpnet.es">
+    <i class="fas fa-envelope"></i>
+  </a>
+  <button type="button" class="fab fab-top" aria-label="Go to top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"96ae60aee851cf91","version":"2025.7.0","r":1,"token":"afd6f52ceee94e9b871512ca32618fea","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}}}' crossorigin="anonymous"></script>
+</body>
+</html>
