@@ -1,0 +1,50 @@
+# WarpNET Network Configuration for GL.iNet Flint 3
+
+config interface 'loopback'
+	option ifname 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+	option ula_prefix 'fd12:3456:789a::/48'
+
+config interface 'lan'
+	option type 'bridge'
+	option ifname 'eth0'
+	option proto 'static'
+	option ipaddr '192.168.1.1'
+	option netmask '255.255.255.0'
+	option ip6assign '60'
+
+config interface 'wan'
+	option ifname 'eth1'
+	option proto 'dhcp'
+
+config interface 'wan6'
+	option ifname 'eth1'
+	option proto 'dhcpv6'
+
+# PPPoE WAN Configuration (disabled by default)
+config interface 'pppoe_wan'
+	option proto 'pppoe'
+	option ifname 'eth1'
+	option username ''
+	option password ''
+	option auto '0'
+
+# Static IP WAN Configuration (disabled by default)  
+config interface 'static_wan'
+	option proto 'static'
+	option ifname 'eth1'
+	option ipaddr ''
+	option netmask ''
+	option gateway ''
+	option dns ''
+	option auto '0'
+
+# USB Tethering Configuration
+config interface 'usb_wan'
+	option proto 'dhcp'
+	option ifname 'usb0'
+	option auto '0'

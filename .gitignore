@@ -1,0 +1,32 @@
+# OpenWrt build artifacts
+openwrt/build/
+openwrt/bin/
+openwrt/staging_dir/
+openwrt/tmp/
+openwrt/logs/
+openwrt/.config.old
+openwrt/.config
+openwrt/feeds.conf
+
+# Temporary files
+*.tmp
+*.log
+*.swp
+*.swo
+*~
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Downloaded logos and assets
+*.png
+*.jpg
+*.jpeg
+*.gif
+!placeholder-logo.png

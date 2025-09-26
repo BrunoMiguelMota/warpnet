@@ -1,0 +1,54 @@
+#!/bin/sh /etc/rc.common
+
+# WarpNET First Boot Setup Script
+# Configures secure DNS and other features automatically
+
+START=99
+STOP=01
+
+USE_PROCD=1
+
+PROG=/usr/bin/warpnet-setup
+
+start_service() {
+    # This script runs once on first boot to configure WarpNET features
+    
+    if [ ! -f /tmp/warpnet-configured ]; then
+        logger -t warpnet-setup "Starting WarpNET initial configuration..."
+        
+        # Enable secure DNS services
+        /etc/init.d/https-dns-proxy enable
+        /etc/init.d/stubby enable
+        
+        # Start secure DNS services
+        /etc/init.d/https-dns-proxy start
+        /etc/init.d/stubby start
+        
+        # Restart dnsmasq to use secure DNS
+        /etc/init.d/dnsmasq restart
+        
+        # Enable firewall
+        /etc/init.d/firewall enable
+        /etc/init.d/firewall restart
+        
+        # Set system hostname
+        uci set system.@system[0].hostname='WarpNET-Router'
+        uci commit system
+        
+        # Configure wireless (keeping OpenWrt defaults)
+        uci set wireless.default_radio0.encryption='psk2'
+        uci set wireless.default_radio1.encryption='psk2'
+        uci commit wireless
+        wifi reload
+        
+        # Mark as configured
+        touch /tmp/warpnet-configured
+        
+        logger -t warpnet-setup "WarpNET configuration completed successfully"
+    fi
+}
+
+stop_service() {
+    # Nothing to stop
+    return 0
+}
