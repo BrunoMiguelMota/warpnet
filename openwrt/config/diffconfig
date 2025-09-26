@@ -1,0 +1,71 @@
+# WarpNET OpenWrt Configuration for GL.iNet Flint 3 (GL-BE9300)
+# Target: mediatek/filogic
+
+CONFIG_TARGET_mediatek=y
+CONFIG_TARGET_mediatek_filogic=y
+CONFIG_TARGET_mediatek_filogic_DEVICE_glinet_gl-be9300=y
+
+# Branding
+CONFIG_VERSION_DIST="WarpNET"
+CONFIG_VERSION_NICK="WarpNET"
+CONFIG_VERSION_MANUFACTURER="WarpNET"
+CONFIG_VERSION_MANUFACTURER_URL="https://warpnet.es"
+CONFIG_VERSION_PRODUCT="GL-BE9300"
+
+# LuCI Web Interface
+CONFIG_PACKAGE_luci=y
+CONFIG_PACKAGE_luci-ssl=y
+CONFIG_PACKAGE_luci-theme-material=y
+CONFIG_PACKAGE_luci-theme-bootstrap=y
+CONFIG_LUCI_LANG_en=y
+
+# Secure DNS packages
+CONFIG_PACKAGE_https-dns-proxy=y
+CONFIG_PACKAGE_stubby=y
+CONFIG_PACKAGE_luci-app-https-dns-proxy=y
+CONFIG_PACKAGE_getdns-utils=y
+
+# Network packages for multi-WAN support
+CONFIG_PACKAGE_kmod-usb-net=y
+CONFIG_PACKAGE_kmod-usb-net-rndis=y
+CONFIG_PACKAGE_kmod-usb-net-cdc-ether=y
+CONFIG_PACKAGE_kmod-usb-net-cdc-ncm=y
+CONFIG_PACKAGE_kmod-usb-net-huawei-cdc-ncm=y
+CONFIG_PACKAGE_kmod-usb-net-qmi-wwan=y
+CONFIG_PACKAGE_kmod-usb-serial=y
+CONFIG_PACKAGE_kmod-usb-serial-option=y
+CONFIG_PACKAGE_kmod-usb-serial-wwan=y
+CONFIG_PACKAGE_usb-modeswitch=y
+CONFIG_PACKAGE_ppp=y
+CONFIG_PACKAGE_ppp-mod-pppoe=y
+CONFIG_PACKAGE_wwan=y
+CONFIG_PACKAGE_comgt=y
+CONFIG_PACKAGE_umbim=y
+CONFIG_PACKAGE_uqmi=y
+
+# Additional network tools
+CONFIG_PACKAGE_mwan3=y
+CONFIG_PACKAGE_luci-app-mwan3=y
+
+# Firewall and security
+CONFIG_PACKAGE_iptables=y
+CONFIG_PACKAGE_iptables-mod-extra=y
+CONFIG_PACKAGE_kmod-ipt-extra=y
+CONFIG_PACKAGE_iptables-mod-ipopt=y
+CONFIG_PACKAGE_ip6tables=y
+
+# System utilities
+CONFIG_PACKAGE_curl=y
+CONFIG_PACKAGE_wget-ssl=y
+CONFIG_PACKAGE_ca-certificates=y
+CONFIG_PACKAGE_ca-bundle=y
+
+# First boot and management
+CONFIG_PACKAGE_block-mount=y
+CONFIG_PACKAGE_kmod-fs-ext4=y
+CONFIG_PACKAGE_e2fsprogs=y
+
+# Additional useful packages
+CONFIG_PACKAGE_nano=y
+CONFIG_PACKAGE_htop=y
+CONFIG_PACKAGE_tcpdump=y

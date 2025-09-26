@@ -1,0 +1,18 @@
+# WarpNET DNS-over-HTTPS Configuration
+# Default: Quad9 Secure DNS
+
+config main
+	option canary_domains_icloud '1'
+	option canary_domains_mozilla '1'
+	option force_dns '1'
+
+config https-dns-proxy
+	option bootstrap_dns '9.9.9.9,149.112.112.112'
+	option resolver_url 'https://dns.quad9.net/dns-query'
+	option listen_addr '127.0.0.1'
+	option listen_port '5053'
+	option user 'nobody'
+	option group 'nogroup'
+	option subnet_addr '127.0.0.1/32'
+	option proxy_server ''
+	option option '0'

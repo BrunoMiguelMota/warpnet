@@ -1,0 +1,156 @@
+#!/bin/sh
+
+# WarpNET DNS Configuration Script
+# Allows switching between different secure DNS providers
+
+HTTPS_DNS_CONFIG="/etc/config/https-dns-proxy"
+STUBBY_CONFIG="/etc/stubby/stubby.yml"
+
+usage() {
+    echo "WarpNET DNS Configuration Tool"
+    echo ""
+    echo "Usage: $0 [command] [options]"
+    echo ""
+    echo "Commands:"
+    echo "  status                 Show current DNS configuration"
+    echo "  set-provider <name>    Set DNS provider (quad9, cloudflare, google)"
+    echo "  set-custom <url>       Set custom DoH server URL"
+    echo "  enable-doh             Enable DNS-over-HTTPS only"
+    echo "  enable-dot             Enable DNS-over-TLS only"
+    echo "  enable-both            Enable both DoH and DoT (default)"
+    echo "  restart                Restart DNS services"
+    echo ""
+    echo "Examples:"
+    echo "  $0 set-provider cloudflare"
+    echo "  $0 set-custom https://dns.example.com/dns-query"
+    echo "  $0 enable-both"
+}
+
+status() {
+    echo "=== WarpNET DNS Status ==="
+    echo ""
+    
+    # Check services
+    if pgrep https-dns-proxy > /dev/null; then
+        echo "DoH Service: Running"
+    else
+        echo "DoH Service: Stopped"
+    fi
+    
+    if pgrep stubby > /dev/null; then
+        echo "DoT Service: Running"
+    else
+        echo "DoT Service: Stopped"
+    fi
+    
+    echo ""
+    echo "Current DoH Configuration:"
+    grep "resolver_url" "$HTTPS_DNS_CONFIG" 2>/dev/null || echo "Not configured"
+    
+    echo ""
+    echo "DNS Test:"
+    nslookup google.com 127.0.0.1 2>/dev/null | grep "Address:" | tail -1 || echo "DNS resolution failed"
+}
+
+set_provider() {
+    case "$1" in
+        "quad9")
+            DOH_URL="https://dns.quad9.net/dns-query"
+            DOT_SERVERS="9.9.9.9 149.112.112.112"
+            DOT_NAME="dns.quad9.net"
+            ;;
+        "cloudflare")
+            DOH_URL="https://cloudflare-dns.com/dns-query"
+            DOT_SERVERS="1.1.1.1 1.0.0.1"
+            DOT_NAME="cloudflare-dns.com"
+            ;;
+        "google")
+            DOH_URL="https://dns.google/dns-query"
+            DOT_SERVERS="8.8.8.8 8.8.4.4"
+            DOT_NAME="dns.google"
+            ;;
+        *)
+            echo "Error: Unknown provider '$1'"
+            echo "Supported providers: quad9, cloudflare, google"
+            exit 1
+            ;;
+    esac
+    
+    echo "Configuring $1 DNS provider..."
+    
+    # Update DoH configuration
+    uci set https-dns-proxy.@https-dns-proxy[0].resolver_url="$DOH_URL"
+    uci commit https-dns-proxy
+    
+    # Update DoT configuration
+    cat > "$STUBBY_CONFIG" << EOF
+resolution_type: GETDNS_RESOLUTION_STUB
+dns_transport_list:
+  - GETDNS_TRANSPORT_TLS
+tls_authentication: GETDNS_AUTHENTICATION_REQUIRED
+tls_query_padding_blocksize: 128
+edns_client_subnet_private: 1
+round_robin_upstreams: 1
+idle_timeout: 10000
+listen_addresses:
+  - 127.0.0.1@5054
+  - 0::1@5054
+
+upstream_recursive_servers:
+EOF
+    
+    for server in $DOT_SERVERS; do
+        cat >> "$STUBBY_CONFIG" << EOF
+  - address_data: $server
+    tls_auth_name: "$DOT_NAME"
+EOF
+    done
+    
+    restart_services
+    echo "DNS provider changed to $1"
+}
+
+set_custom() {
+    if [ -z "$1" ]; then
+        echo "Error: Custom DoH URL required"
+        echo "Example: $0 set-custom https://dns.example.com/dns-query"
+        exit 1
+    fi
+    
+    echo "Setting custom DoH server: $1"
+    uci set https-dns-proxy.@https-dns-proxy[0].resolver_url="$1"
+    uci commit https-dns-proxy
+    
+    /etc/init.d/https-dns-proxy restart
+    echo "Custom DoH server configured"
+}
+
+restart_services() {
+    echo "Restarting DNS services..."
+    /etc/init.d/https-dns-proxy restart
+    /etc/init.d/stubby restart
+    /etc/init.d/dnsmasq restart
+    echo "DNS services restarted"
+}
+
+case "$1" in
+    "status")
+        status
+        ;;
+    "set-provider")
+        set_provider "$2"
+        ;;
+    "set-custom")
+        set_custom "$2"
+        ;;
+    "restart")
+        restart_services
+        ;;
+    "enable-doh"|"enable-dot"|"enable-both")
+        echo "Protocol switching will be implemented in future version"
+        ;;
+    *)
+        usage
+        exit 1
+        ;;
+esac

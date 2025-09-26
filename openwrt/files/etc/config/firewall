@@ -1,0 +1,88 @@
+# WarpNET Firewall Configuration with DNS Security
+
+config defaults
+	option syn_flood '1'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+
+config zone
+	option name 'lan'
+	list network 'lan'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'ACCEPT'
+
+config zone
+	option name 'wan'
+	list network 'wan'
+	list network 'wan6'
+	list network 'pppoe_wan'
+	list network 'static_wan'
+	list network 'usb_wan'
+	option input 'REJECT'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	option masq '1'
+	option mtu_fix '1'
+
+config forwarding
+	option src 'lan'
+	option dest 'wan'
+
+# Block all non-secure DNS traffic from LAN clients
+config rule
+	option name 'Block Insecure DNS UDP'
+	option src 'lan'
+	option dest 'wan'
+	option dest_port '53'
+	option proto 'udp'
+	option target 'REJECT'
+
+config rule
+	option name 'Block Insecure DNS TCP'
+	option src 'lan'
+	option dest 'wan'
+	option dest_port '53'
+	option proto 'tcp'
+	option target 'REJECT'
+
+# Allow secure DNS protocols
+config rule
+	option name 'Allow DNS-over-HTTPS'
+	option src 'lan'
+	option dest 'wan'
+	option dest_port '443'
+	option proto 'tcp'
+	option target 'ACCEPT'
+
+config rule
+	option name 'Allow DNS-over-TLS'
+	option src 'lan'
+	option dest 'wan'
+	option dest_port '853'
+	option proto 'tcp'
+	option target 'ACCEPT'
+
+# Allow SSH access
+config rule
+	option name 'Allow-SSH'
+	option src 'wan'
+	option proto 'tcp'
+	option dest_port '22'
+	option target 'ACCEPT'
+
+# Allow LuCI web interface
+config rule
+	option name 'Allow-HTTP'
+	option src 'wan'
+	option proto 'tcp'
+	option dest_port '80'
+	option target 'ACCEPT'
+
+config rule
+	option name 'Allow-HTTPS'
+	option src 'wan'
+	option proto 'tcp'
+	option dest_port '443'
+	option target 'ACCEPT'
